@@ -18,7 +18,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #333;
     line-height: 1.6;
-    max-width: 900px;
+    max-width: 56.25rem; /* 900px -> rem for zoom-friendly scaling */
     margin: 2rem auto;
     padding: 0 1.5rem;
 }
@@ -27,15 +27,15 @@ body {
  * 2.0 - Header & Footer
  * -------------------------------------------------------------------------
  */
- /* Center the header content (title, tagline) using its ID */
+
+/* Center the header content (title, tagline) using its ID */
 #masthead.site-header {
     text-align: center;
 }
 
 /* Center the footer content (copyright) using its ID */
-/* This high-specificity selector will force the alignment */
 #colophon.site-footer {
-    text-align: center !important;
+    text-align: center !important; /* Force override */
 }
 
 .site-title a {
@@ -61,24 +61,27 @@ body {
     word-wrap: normal !important;
 }
 
+/* REFACTOR 3 (Skip Link Spacing) */
 .screen-reader-text:focus {
     background-color: #f1f1f1;
-    border-radius: 3px;
-    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+    border-radius: 0.1875rem; /* 3px -> rem */
+    box-shadow: 0 0 0.125rem 0.125rem rgba(0, 0, 0, 0.6); /* 2px -> rem */
     clip: auto !important;
     clip-path: none;
     color: #21759b;
     display: block;
-    font-size: 14px;
     font-weight: bold;
     height: auto;
-    left: 5px;
     line-height: normal;
-    padding: 15px 23px 14px;
     text-decoration: none;
-    top: 5px;
     width: auto;
     z-index: 100000; /* Always on top */
+    
+    /* Converted all 'px' to 'rem' for accessibility */
+    font-size: 0.875rem; /* 14px / 16px */
+    left: 0.3125rem;     /* 5px / 16px */
+    top: 0.3125rem;      /* 5px / 16px */
+    padding: 0.9375rem 1.4375rem 0.875rem; /* 15px 23px 14px */
 }
 
 /*
@@ -99,21 +102,25 @@ body.page .entry-header {
     width: 100%;
     text-align: center;
     margin-top: 1rem;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border-top: 0.0625rem solid #eee;   /* 1px -> rem */
+    border-bottom: 0.0625rem solid #eee;/* 1px -> rem */
 }
 
+/* REFACTOR 2 (Flexbox Menu) */
 .main-navigation ul {
+    display: flex;            /* 1. Makes the children (li) horizontal */
+    flex-wrap: wrap;          /* 2. Allows items to wrap to a new line */
+    justify-content: center;  /* 3. Centers the menu items */
     margin: 0;
     padding: 0.5rem 0;
     list-style: none;
 }
 
 .main-navigation li {
-    display: inline-block; /* This makes the menu horizontal */
-    margin: 0 1rem;
+    margin: 0 1rem;           /* This just provides spacing */
 }
 
+/* REFACTOR 1 (No Duplicate PX) */
 .main-navigation a {
     display: block;
     padding: 0.5rem;
@@ -121,8 +128,10 @@ body.page .entry-header {
     color: #555;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
+    
+    /* Converted all 'px' to 'rem' for accessibility */
+    font-size: 0.875rem;      /* 14px / 16px */
+    letter-spacing: 0.0625rem; /* 1px / 16px */
 }
 
 .main-navigation a:hover,
@@ -135,7 +144,8 @@ body.page .entry-header {
  * 6.0 - Mobile Responsiveness
  * -------------------------------------------------------------------------
  */
-@media (max-width: 768px) {
+/* REFACTOR 2 (EM Breakpoint) */
+@media (max-width: 48em) { /* 768px / 16px = 48em */
 
     /* 1. Give the body less margin on phones */
     body {
@@ -143,22 +153,26 @@ body.page .entry-header {
         padding: 0 1rem;
     }
 
-    /* 2. Make the navigation menu stack vertically */
+    /* REFACTOR 2 (Robust Mobile Menu) */
+    .main-navigation ul {
+        flex-direction: column; /* Stack the menu */
+    }
+
     .main-navigation li {
-        display: block;  /* This is the fix: stack the links */
-        margin: 0;
+        margin: 0; /* Remove horizontal margin */
+        width: 100%; /* Make list items full-width */
     }
 
     /* 3. Add a nice border between the stacked links */
     .main-navigation a {
         padding: 0.75rem 1rem;
-        border-bottom: 1px solid #eee;
+        border-bottom: 0.0625rem solid #eee; /* 1px -> rem */
     }
 
     /* 4. Tidy up the top border for the menu */
     .main-navigation {
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
+        border-top: 0.0625rem solid #ddd;   /* 1px -> rem */
+        border-bottom: 0.0625rem solid #ddd;/* 1px -> rem */
     }
 
     /* 5. Clean up spacing on headings for mobile */
