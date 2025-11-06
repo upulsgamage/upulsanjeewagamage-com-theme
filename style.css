@@ -9,6 +9,10 @@ License: All rights reserved.
 Text Domain: upulgamage-authority
 */
 
+/*
+ * 1.0 - Global Styles
+ * -------------------------------------------------------------------------
+ */
 body {
     background-color: #f4f4f4;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -19,57 +23,150 @@ body {
     padding: 0 1.5rem;
 }
 
-.site-header, .site-footer {
+/*
+ * 2.0 - Header & Footer
+ * -------------------------------------------------------------------------
+ */
+ /* Center the header content (title, tagline) using its ID */
+#masthead.site-header {
     text-align: center;
 }
 
-/*
- * Accessibility: Screen Reader Text
- *
- * This is the official WordPress standard CSS for
- * hiding text visually while keeping it accessible
- * to screen readers and keyboard navigation.
- * This will fix our "Skip to content" link.
- */
-.screen-reader-text {
-	border: 0;
-	clip: rect(1px, 1px, 1px, 1px);
-	clip-path: inset(50%);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
-	word-wrap: normal !important;
-}
-
-/*
- * This part makes the link re-appear
- * ONLY when a keyboard user "tabs" to it.
- */
-.screen-reader-text:focus {
-	background-color: #f1f1f1;
-	border-radius: 3px;
-	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
-	clip: auto !important;
-	clip-path: none;
-	color: #21759b;
-	display: block;
-	font-size: 14px;
-	font-weight: bold;
-	height: auto;
-	left: 5px;
-	line-height: normal;
-	padding: 15px 23px 14px;
-	text-decoration: none;
-	top: 5px;
-	width: auto;
-	z-index: 100000; /* Always on top */
+/* Center the footer content (copyright) using its ID */
+/* This high-specificity selector will force the alignment */
+#colophon.site-footer {
+    text-align: center !important;
 }
 
 .site-title a {
     color: #000;
     text-decoration: none;
     font-weight: bold;
+}
+
+/*
+ * 3.0 - Accessibility
+ * -------------------------------------------------------------------------
+ */
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+    clip: auto !important;
+    clip-path: none;
+    color: #21759b;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: auto;
+    left: 5px;
+    line-height: normal;
+    padding: 15px 23px 14px;
+    text-decoration: none;
+    top: 5px;
+    width: auto;
+    z-index: 100000; /* Always on top */
+}
+
+/*
+ * 4.0 - Page Polish
+ * -------------------------------------------------------------------------
+ */
+body.page .entry-header {
+    display: none; /* Hides redundant page titles */
+}
+
+
+/*
+ * 5.0 - Navigation Menu
+ * -------------------------------------------------------------------------
+ */
+.main-navigation {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.main-navigation ul {
+    margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+}
+
+.main-navigation li {
+    display: inline-block; /* This makes the menu horizontal */
+    margin: 0 1rem;
+}
+
+.main-navigation a {
+    display: block;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.main-navigation a:hover,
+.main-navigation .current-menu-item > a {
+    color: #000;
+    background-color: #f9f9f9;
+}
+
+/*
+ * 6.0 - Mobile Responsiveness
+ * -------------------------------------------------------------------------
+ */
+@media (max-width: 768px) {
+
+    /* 1. Give the body less margin on phones */
+    body {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+
+    /* 2. Make the navigation menu stack vertically */
+    .main-navigation li {
+        display: block;  /* This is the fix: stack the links */
+        margin: 0;
+    }
+
+    /* 3. Add a nice border between the stacked links */
+    .main-navigation a {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* 4. Tidy up the top border for the menu */
+    .main-navigation {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* 5. Clean up spacing on headings for mobile */
+    h1.wp-block-heading,
+    h2.wp-block-heading,
+    h3.wp-block-heading {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    
 }
