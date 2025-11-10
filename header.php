@@ -27,7 +27,7 @@
 				<p class="site-description"><?php echo $description; ?></p>
 			<?php endif; ?>
 		</div><!-- .site-branding -->
-        <nav id="site-navigation" class="main-navigation" role="navigation">
+        <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Navigation">
             <?php
                 wp_nav_menu(
                     array(
