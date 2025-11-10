@@ -191,3 +191,28 @@ if ( ! function_exists( 'upulgamage_nav_menu_link_rel' ) ) {
 }
 add_filter( 'nav_menu_link_attributes', 'upulgamage_nav_menu_link_rel', 10, 3 );
 
+/**
+ * Content hardening: auto-correct malformed protocol typos like href="https=//" or "http=//".
+ * These usually arise from WYSIWYG or copy/paste errors and break links.
+ */
+function upulgamage_fix_malformed_protocols( $content ) {
+    // Quick bail if the pattern does not exist for performance.
+    if ( false === strpos( $content, 'href="http=' ) && false === strpos( $content, 'href="https=' ) ) {
+        return $content;
+    }
+
+    // Regex will capture href="http=//example.com" or https variant and replace the '=' with ':'.
+    // Use a callback to be safe even if mixed case (unlikely) appears.
+    $content = preg_replace_callback(
+        '/href=\"(https?)=\/\//i',
+        function( $m ) {
+            $scheme = strtolower( $m[1] );
+            return 'href="' . $scheme . '://';
+        },
+        $content
+    );
+
+    return $content;
+}
+add_filter( 'the_content', 'upulgamage_fix_malformed_protocols', 5 );
+
