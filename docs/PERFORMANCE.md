@@ -10,7 +10,7 @@ These scores were captured on **November 10, 2025,** via Google PageSpeed Insigh
 
 | Metric | Score (Mobile) |
 | :--- | :--- |
-| **Performance** | **[98]** / 100 |
+| **Performance** | **[99]** / 100 |
 | **Accessibility** | **[94]** / 100 |
 | **Best Practices** | **[81]** / 100 |
 | **SEO** | **[100]** / 100 |
@@ -25,4 +25,3 @@ My goal for this theme is to maintain:
 ## Known v1.1 Refactor Notes
 
 * **Conditional Loading:** The AI audit correctly noted that plugin assets (`fluentform.css`) are loading globally. A future v1.3 task will be to write a PHP function to *conditionally* load these assets *only* on the pages where the form is present (Homepage, Architect's Journal).
-* **Asset Size:** The main `style.css` file is currently `~5kb`. The performance budget is to keep this file under `25kb` to ensure a minimal footprint.
