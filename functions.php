@@ -99,3 +99,95 @@ function upulgamage_authority_disable_emoji_dns_prefetch( $urls, $relation_type 
 }
 add_filter( 'wp_resource_hints', 'upulgamage_authority_disable_emoji_dns_prefetch', 10, 2 );
 
+
+/**
+ * Ensure external links opened in a new tab are safe: add rel="noopener noreferrer".
+ *
+ * Coverage:
+ * - Content links: extend WordPress's default wp_targeted_link_rel to include "noreferrer" as well.
+ * - Navigation menu links: enforce rel on external target="_blank" items.
+ */
+
+if ( ! function_exists( 'upulgamage_is_external_url' ) ) {
+    /**
+     * Check if a URL is external to the current site.
+     *
+     * @param string $url The URL to check.
+     * @return bool True if external, false otherwise.
+     */
+    function upulgamage_is_external_url( $url ) {
+        if ( empty( $url ) ) {
+            return false;
+        }
+
+        // Ignore anchors and non-http(s) schemes (mailto:, tel:, etc.).
+        if ( 0 === strpos( $url, '#' ) || ! preg_match( '#^https?://#i', $url ) ) {
+            return false;
+        }
+
+        $site_host = wp_parse_url( home_url(), PHP_URL_HOST );
+        $link_host = wp_parse_url( $url, PHP_URL_HOST );
+
+        if ( empty( $link_host ) || empty( $site_host ) ) {
+            return false;
+        }
+
+        return ! hash_equals( $site_host, $link_host );
+    }
+}
+
+if ( ! function_exists( 'upulgamage_targeted_link_rel' ) ) {
+    /**
+     * Add "noreferrer" alongside WordPress's default "noopener" for target=_blank links in content.
+     *
+     * @param string $rel  Existing rel values WordPress plans to add.
+     * @param string $link The link href (unused here but kept for signature parity).
+     * @return string Updated rel values.
+     */
+    function upulgamage_targeted_link_rel( $rel, $link ) {
+        $rels = preg_split( '/\s+/', trim( (string) $rel ) );
+        $rels = array_filter( is_array( $rels ) ? $rels : array() );
+
+        foreach ( array( 'noopener', 'noreferrer' ) as $required ) {
+            if ( ! in_array( $required, $rels, true ) ) {
+                $rels[] = $required;
+            }
+        }
+
+        return trim( implode( ' ', $rels ) );
+    }
+}
+add_filter( 'wp_targeted_link_rel', 'upulgamage_targeted_link_rel', 10, 2 );
+
+if ( ! function_exists( 'upulgamage_nav_menu_link_rel' ) ) {
+    /**
+     * Ensure nav menu links that open in a new tab and point off-site include safe rel attributes.
+     *
+     * @param array  $atts The HTML attributes applied to the menu item's <a> element.
+     * @param object $item The current menu item object.
+     * @param object $args An object of wp_nav_menu() arguments.
+     * @return array Possibly modified attributes.
+     */
+    function upulgamage_nav_menu_link_rel( $atts, $item, $args ) {
+        $href   = isset( $atts['href'] ) ? $atts['href'] : '';
+        $target = isset( $atts['target'] ) ? $atts['target'] : '';
+
+        if ( '_blank' === $target && upulgamage_is_external_url( $href ) ) {
+            $existing = isset( $atts['rel'] ) ? $atts['rel'] : '';
+            $rels     = preg_split( '/\s+/', trim( (string) $existing ) );
+            $rels     = array_filter( is_array( $rels ) ? $rels : array() );
+
+            foreach ( array( 'noopener', 'noreferrer' ) as $required ) {
+                if ( ! in_array( $required, $rels, true ) ) {
+                    $rels[] = $required;
+                }
+            }
+
+            $atts['rel'] = trim( implode( ' ', $rels ) );
+        }
+
+        return $atts;
+    }
+}
+add_filter( 'nav_menu_link_attributes', 'upulgamage_nav_menu_link_rel', 10, 3 );
+
