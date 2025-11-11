@@ -134,8 +134,7 @@ body.page .entry-header {
     letter-spacing: 0.0625rem; /* 1px / 16px */
 }
 
-.main-navigation a:hover,
-.main-navigation .current-menu-item > a {
+.main-navigation a:hover {
     color: #000;
     background-color: #f9f9f9;
 }
@@ -188,7 +187,6 @@ body.page .entry-header {
 /*
  * 7.0 - v1.1 Refactor Sprint: Visual Trust & Conversion
  * -------------------------------------------------------------------------
- * These are the high-priority fixes from the AI Audit.
  */
 
 /* * FIX 1: Active Navigation State
@@ -221,4 +219,51 @@ body.page .entry-header {
     border: 0.0625rem solid #ddd; /* 1px */
     border-radius: 0.25rem; /* 4px */
     box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.05); /* 4px 8px */
+}
+
+/*
+ * 8.0 - Core WordPress Block Styles (The "Bullet Point" Fix)
+ * -------------------------------------------------------------------------
+ * Re-adding essential styles for lists, quotes, and code
+ * to fix the "invisible bullet point" bug.
+ */
+
+/* --- List Styles (The "Bullet Point" Fix) --- */
+.entry-content .wp-block-list li {
+    margin-bottom: 0.5rem; /* Adds nice spacing between list items */
+}
+
+.entry-content .wp-block-list,
+.entry-content ol {
+    list-style-position: outside; /* Ensures bullets/numbers are indented */
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.entry-content .wp-block-list {
+    list-style-type: disc; /* Forces the bullets to show */
+}
+
+.entry-content ol {
+    list-style-type: decimal; /* Forces the numbers to show */
+}
+
+/* --- Quote Styles --- */
+.wp-block-quote {
+    border-left: 0.25rem solid #000; /* 4px */
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+/* --- Code Block Styles --- */
+pre.wp-block-code {
+    background-color: #ffffff;
+    border: 0.0625rem solid #eee; /* 1px */
+    padding: 1.5rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    overflow-x: auto; /* Adds horizontal scroll for long code */
 }
