@@ -267,3 +267,38 @@ pre.wp-block-code {
     line-height: 1.5;
     overflow-x: auto; /* Adds horizontal scroll for long code */
 }
+
+/*
+ * 8.0 - Social Media Links (Footer)
+ * -------------------------------------------------------------------------
+ */
+.site-social-links {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.site-social-links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.site-social-links li {
+    display: inline-block;
+    margin: 0 0.5rem; /* 8px */
+}
+.site-social-links a {
+    display: block;
+    padding: 0.5rem 1rem; /* 8px 16px */
+    border: 0.0625rem solid #ddd; /* 1px */
+    background-color: #fff;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 0.875rem; /* 14px */
+    border-radius: 0.25rem; /* 4px */
+    transition: all 0.2s ease-in-out;
+}
+.site-social-links a:hover {
+    background-color: #000;
+    border-color: #000;
+    color: #fff;
+}

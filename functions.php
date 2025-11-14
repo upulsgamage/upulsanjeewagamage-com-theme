@@ -79,7 +79,7 @@ function upulgamage_authority_scripts_and_styles() {
         'upulgamage-authority-style',
         get_stylesheet_uri(),
         array(),
-        '1.2.8' // Version 1.2.8 to force browser cache to update
+        '1.2.9' // Version 1.2.9 to force browser cache to update
     );
 
 }
